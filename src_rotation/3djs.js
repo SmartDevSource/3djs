@@ -1,4 +1,4 @@
-import {  Vector3, Cube, MatMul, MatToVec }  from "./mathlib.js"
+import {  Vector3, Cube, MatMul, MatToVec, Rotation }  from "./mathlib.js"
 
 ///////////////// DECLARATIONS /////////////////
 const canvas = document.getElementById("canvas")
@@ -26,30 +26,13 @@ const drawPoint = (x, y) => {
 }
 
 const cube = new Cube(
-    new Vector3(150, 150, 0),
-    new Vector3(200, 150, 0),
-    new Vector3(200, 200, 0),
-    new Vector3(150, 200, 0)
+    new Vector3(150, 150, -25),
+    new Vector3(200, 150, -25),
+    new Vector3(200, 200, -25),
+    new Vector3(150, 200, -25)
 )
 
 let angle = 0
-
-const rotation = () => [
-    [Math.cos(angle), -Math.sin(angle), 0],
-    [Math.sin(angle), Math.cos(angle), 0],
-]
-
-const rotationX = () => [
-    [1, 0, 0],
-    [0, Math.cos(angle), -Math.sin(angle)],
-    [0, Math.sin(angle), Math.cos(angle)]
-]
-
-const rotationY = () => [
-    [Math.cos(angle), 0, Math.sin(angle)],
-    [0, 1, 0],
-    [-Math.sin(angle), 0, Math.cos(angle)]
-]
 
 const scene = () => {
     angle += 0.01
@@ -59,9 +42,10 @@ const scene = () => {
 
     for (let v in cube.vectors){
         const vec = cube.vectors[v]
-        const matToVec = MatToVec(MatMul(rotationY(), [[vec.x - cubeCenter.x], 
-                                                      [vec.y - cubeCenter.y], 
-                                                      [vec.z - cubeCenter.z]]))
+        const matToVec = MatToVec(MatMul(Rotation(angle).x, 
+            [[vec.x - cubeCenter.x],
+            [vec.y - cubeCenter.y],
+            [vec.z - cubeCenter.z]]))
         drawPoint(matToVec.x + cubeCenter.x, matToVec.y + cubeCenter.y)
     }
 }

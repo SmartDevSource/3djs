@@ -14,6 +14,11 @@ export class Cube{
             v2: v2,
             v3: v3,
             v4: v4,
+            v1z: {x: v1.x, y: v1.y, z: -v1.z},
+            v2z: {x: v2.x, y: v2.y, z: -v2.z},
+            v3z: {x: v3.x, y: v3.y, z: -v3.z},
+            v4z: {x: v4.x, y: v4.y, z: -v4.z}
+
         }
     }
     getCubeCenter(){
@@ -46,4 +51,26 @@ export const MatMul = (a, b) => {
 export const MatToVec = (m) => {
     return m.length == 2 ? {x: m[0][0], y: m[1][0]} : 
                            {x: m[0][0], y: m[1][0], z: m[2][0]}
+}
+
+export const Rotation = angle => {
+    return  {x: 
+            [
+                [1, 0, 0],
+                [0, Math.cos(angle), -Math.sin(angle)],
+                [0, Math.sin(angle), Math.cos(angle)]
+            ],
+            y:
+                [
+                    [Math.cos(angle), 0, Math.sin(angle)],
+                    [0, 1, 0],
+                    [-Math.sin(angle), 0, Math.cos(angle)]
+                ],
+            z:
+                [
+                    [Math.cos(angle), -Math.sin(angle), 0],
+                    [Math.sin(angle), Math.cos(angle), 0],
+                    [0, 0, 1]
+                ]
+            }
 }
