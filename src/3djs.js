@@ -13,12 +13,6 @@ window.addEventListener("resize", ()=>{
 })
 
 //////////////// SHAPES ////////////////
-const triangle2D = new Triangle2D(
-    new Vector2(0, 0),
-    new Vector2(20, 0),
-    new Vector2(10, 30)
-)
-
 const triangle3D = new Triangle3D(
     new Vector3(20, 20, 1),
     new Vector3(20, 40, 1),
@@ -27,8 +21,7 @@ const triangle3D = new Triangle3D(
 ///////////////// FUNCTIONS /////////////////
 const scene = () => {
     ctx.fillStyle = "red"
-    // drawTriangle(triangle2D)
-    drawTriangle(triangle3D.translate(new Vector3(200, 50, 0)).projection())
+    drawTriangle(triangle3D.translate(new Vector3(0, 0, 0)).projection())
     requestAnimationFrame(scene)
 }
 
