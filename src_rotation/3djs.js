@@ -39,6 +39,18 @@ const rotation = () => [
     [Math.sin(angle), Math.cos(angle), 0],
 ]
 
+const rotationX = () => [
+    [1, 0, 0],
+    [0, Math.cos(angle), -Math.sin(angle)],
+    [0, Math.sin(angle), Math.cos(angle)]
+]
+
+const rotationY = () => [
+    [Math.cos(angle), 0, Math.sin(angle)],
+    [0, 1, 0],
+    [-Math.sin(angle), 0, Math.cos(angle)]
+]
+
 const scene = () => {
     angle += 0.01
     requestAnimationFrame(scene)
@@ -47,7 +59,7 @@ const scene = () => {
 
     for (let v in cube.vectors){
         const vec = cube.vectors[v]
-        const matToVec = MatToVec(MatMul(rotation(), [[vec.x - cubeCenter.x], 
+        const matToVec = MatToVec(MatMul(rotationY(), [[vec.x - cubeCenter.x], 
                                                       [vec.y - cubeCenter.y], 
                                                       [vec.z - cubeCenter.z]]))
         drawPoint(matToVec.x + cubeCenter.x, matToVec.y + cubeCenter.y)
