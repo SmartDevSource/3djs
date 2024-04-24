@@ -16,6 +16,22 @@ export class Vector3{
         this.y = y
         this.z = z
     }
+    rotX(pitch){
+        const cosPitch = Math.cos(pitch)
+        const sinPitch = Math.sin(pitch)
+        const y = cosPitch * this.y - sinPitch * this.z
+        const z = sinPitch * this.y + cosPitch * this.z
+        return new Vector3(this.x, y, z)
+    }
+    rotY(yaw){
+        const cosYaw = Math.cos(yaw)
+        const sinYaw = Math.sin(yaw)
+        const x = cosYaw * this.x + sinYaw * this.z
+        const z = -sinYaw * this.x + cosYaw * this.z
+        console.log("x", x)
+        console.log("z", z)
+        return new Vector3(x, this.y, z)
+    }
     innerDivider(v){
         return new Vector3(this.x / v.x, this.y / v.y, this.z / v.z)
     }
@@ -46,5 +62,15 @@ export class Triangle3D{
     }
     translate(v){
         return new Triangle3D(this.v1.innerAdder(v), this.v2.innerAdder(v), this.v3.innerAdder(v))
+    }
+    rotX(pitch){
+        return new Triangle3D(this.v1.rotX(pitch), 
+                              this.v2.rotX(pitch), 
+                              this.v3.rotX(pitch))
+    }
+    rotY(yaw){
+        return new Triangle3D(this.v1.rotY(yaw),
+                              this.v2.rotY(yaw),
+                              this.v3.rotY(yaw))
     }
 }
