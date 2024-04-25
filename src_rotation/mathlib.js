@@ -25,8 +25,40 @@ export class Cube{
             z: 0
         }
     }
-    updateVectors(){
+    scale(size){
+        this.vectors = {
+            v1: {x: this.vectors.v1.x - size/2, 
+                 y: this.vectors.v1.y - size/2, 
+                 z: this.vectors.v1.z - size/2},
 
+            v2: {x: this.vectors.v2.x + size/2, 
+                 y: this.vectors.v2.y - size/2, 
+                 z: this.vectors.v2.z - size/2},
+
+            v3: {x: this.vectors.v3.x + size/2,
+                 y: this.vectors.v3.y + size/2, 
+                 z: this.vectors.v3.z - size/2},
+
+            v4: {x: this.vectors.v4.x - size/2,
+                 y: this.vectors.v4.y + size/2, 
+                 z: this.vectors.v4.z - size/2},
+
+            v1z: {x: this.vectors.v1z.x - size/2, 
+                 y: this.vectors.v1z.y - size/2, 
+                 z: this.vectors.v1z.z + size/2},
+
+            v2z: {x: this.vectors.v2z.x + size/2, 
+                 y: this.vectors.v2z.y - size/2, 
+                 z: this.vectors.v2z.z + size/2},            
+
+            v3z: {x: this.vectors.v3z.x + size/2,
+                 y: this.vectors.v3z.y + size/2, 
+                 z: this.vectors.v3z.z + size/2},  
+                 
+            v4z: {x: this.vectors.v4z.x - size/2,
+                 y: this.vectors.v4z.y + size/2, 
+                 z: this.vectors.v4z.z + size/2},
+        }
     }
     getCenter(){
         return new Vector3(
@@ -55,17 +87,17 @@ export const MatMul = (a, b) => {
 }
 
 export const MatToVec = (m) => {
-    return m.length == 2 ? {x: m[0][0], y: m[1][0]} : 
+    return m.length == 2 ? {x: m[0][0], y: m[1][0]} :
                            {x: m[0][0], y: m[1][0], z: m[2][0]}
 }
 
 export const Rotation = angle => {
     return  {x: 
-            [
-                [1, 0, 0],
-                [0, Math.cos(angle), -Math.sin(angle)],
-                [0, Math.sin(angle), Math.cos(angle)]
-            ],
+                [
+                    [1, 0, 0],
+                    [0, Math.cos(angle), -Math.sin(angle)],
+                    [0, Math.sin(angle), Math.cos(angle)]
+                ],
             y:
                 [
                     [Math.cos(angle), 0, Math.sin(angle)],

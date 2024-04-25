@@ -39,7 +39,9 @@ const drawShape = shape => {
     }
 }
 
-const cube = new Cube(150, 150, 20, 20, 20, 20)
+const cube = new Cube(150, 150, 20,
+                      20, 20, 20)
+cube.scale(50)
 let angle = 0
 
 const scene = () => {
