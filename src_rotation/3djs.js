@@ -25,29 +25,29 @@ const drawPoint = (x, y) => {
     ctx.stroke()
 }
 
-const cube = new Cube(
-    new Vector3(150, 150, -25),
-    new Vector3(200, 150, -25),
-    new Vector3(200, 200, -25),
-    new Vector3(150, 200, -25)
-)
+const drawShape = shape => {
+    for (let v in shape.vectors){
+        const shapeCenter = shape.getCenter()
+        const vectors = shape.vectors[v]
+        let xRot = MatMul(Rotation(shape.rotation.x).x, 
+            [[vectors.x - shapeCenter.x],
+            [vectors.y - shapeCenter.y],
+            [vectors.z - shapeCenter.z]])
+        let yRot = MatMul(Rotation(shape.rotation.y).y, xRot)
+        const rotation = MatToVec(MatMul(Rotation(shape.rotation.z).z, yRot))
+        drawPoint(rotation.x + shapeCenter.x, rotation.y + shapeCenter.y)
+    }
+}
 
+const cube = new Cube(150, 150, 20, 20, 20, 20)
 let angle = 0
 
 const scene = () => {
     angle += 0.01
     requestAnimationFrame(scene)
     ctx.clearRect(0, 0, screen.w, screen.h)
-    const cubeCenter = cube.getCubeCenter()
-
-    for (let v in cube.vectors){
-        const vec = cube.vectors[v]
-        const matToVec = MatToVec(MatMul(Rotation(angle).x, 
-            [[vec.x - cubeCenter.x],
-            [vec.y - cubeCenter.y],
-            [vec.z - cubeCenter.z]]))
-        drawPoint(matToVec.x + cubeCenter.x, matToVec.y + cubeCenter.y)
-    }
+    cube.rotation.y = angle
+    drawShape(cube)
 }
 
 scene()

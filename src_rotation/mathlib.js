@@ -8,26 +8,32 @@ export class Vector3{
 }
 
 export class Cube{
-    constructor(v1, v2, v3, v4){
+    constructor(px, py, pz, width, height, depth){
         this.vectors = {
-            v1: v1,
-            v2: v2,
-            v3: v3,
-            v4: v4,
-            v1z: {x: v1.x, y: v1.y, z: -v1.z},
-            v2z: {x: v2.x, y: v2.y, z: -v2.z},
-            v3z: {x: v3.x, y: v3.y, z: -v3.z},
-            v4z: {x: v4.x, y: v4.y, z: -v4.z}
-
+            v1: {x: px, y: py, z: pz},
+            v2: {x: px + width, y: py, z: pz},
+            v3: {x: px + width, y: py + height, z: pz},
+            v4: {x: px, y: py + height, z: pz},
+            v1z: {x: px, y: py, z: pz + depth},
+            v2z: {x: px + width, y: py, z: pz + depth},
+            v3z: {x: px + width, y: py + height, z:pz + depth},
+            v4z: {x: px, y: py + height, z: pz + depth}
+        }
+        this.rotation = {
+            x: 0,
+            y: 0,
+            z: 0
         }
     }
-    getCubeCenter(){
-        const center = new Vector3(
+    updateVectors(){
+
+    }
+    getCenter(){
+        return new Vector3(
             (this.vectors.v1.x + this.vectors.v2.x + this.vectors.v3.x + this.vectors.v4.x) / 4,
             (this.vectors.v1.y + this.vectors.v2.y + this.vectors.v3.y + this.vectors.v4.y) / 4,
             (this.vectors.v1.z + this.vectors.v2.z + this.vectors.v3.z + this.vectors.v4.z) / 4,
         )
-        return center
     }
 }
 
