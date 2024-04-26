@@ -1,5 +1,5 @@
-import {  Vector3, Cube, MatMul, MatToVec, Rotation }  from "./mathlib.js"
-import { drawShape } from "./shapes.js"
+import { drawShape, Shape } from "./shapes.js"
+
 ///////////////// DECLARATIONS /////////////////
 const canvas = document.getElementById("canvas")
 const ctx = canvas.getContext("2d")
@@ -13,23 +13,32 @@ canvas.height = canvas.offsetHeight * windowScale
 window.addEventListener("resize", ()=>{
     screen.w = window.innerWidth
     screen.h = window.innerHeight
-    console.log("Screen size :", screen)
 })
 
 //////////////// SHAPES ////////////////
-const cube = new Cube(200, 200, 20,
-                      100, 100, 50)
-cube.scale(10)
+const shape = new Shape([
+                        [200, 200, 10],
+                        [250, 200, 10],
+                        [280, 250, 10],
+                        [220, 250, 10],
+
+                        [200, 200, -10],
+                        [250, 200, -10],
+                        [280, 250, -10],
+                        [220, 250, -10],
+                    ])
+shape.scale(0)
+        
 let angle = 0
 
 const scene = () => {
-    // angle += 0.01
+    angle += 0.01
     requestAnimationFrame(scene)
     ctx.clearRect(0, 0, screen.w, screen.h)
-    cube.rotation.x = angle
-    cube.rotation.y = angle
-    cube.rotation.z = angle
-    drawShape(ctx, cube, false)
+    shape.rotation.x = angle
+    shape.rotation.y = angle
+    shape.rotation.z = angle
+    drawShape(ctx, shape, true)
 }
 
 scene()
