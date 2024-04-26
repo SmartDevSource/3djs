@@ -1,5 +1,5 @@
 import {  Vector3, Cube, MatMul, MatToVec, Rotation }  from "./mathlib.js"
-
+import { drawShape } from "./shapes.js"
 ///////////////// DECLARATIONS /////////////////
 const canvas = document.getElementById("canvas")
 const ctx = canvas.getContext("2d")
@@ -17,39 +17,19 @@ window.addEventListener("resize", ()=>{
 })
 
 //////////////// SHAPES ////////////////
-const drawPoint = (x, y) => {
-    ctx.beginPath()
-    ctx.fillStyle = "white"
-    ctx.arc(x, y, 5, 0, Math.PI*2)
-    ctx.fill()
-    ctx.stroke()
-}
-
-const drawShape = shape => {
-    for (let v in shape.vectors){
-        const shapeCenter = shape.getCenter()
-        const vectors = shape.vectors[v]
-        let xRot = MatMul(Rotation(shape.rotation.x).x, 
-            [[vectors.x - shapeCenter.x],
-            [vectors.y - shapeCenter.y],
-            [vectors.z - shapeCenter.z]])
-        let yRot = MatMul(Rotation(shape.rotation.y).y, xRot)
-        const rotation = MatToVec(MatMul(Rotation(shape.rotation.z).z, yRot))
-        drawPoint(rotation.x + shapeCenter.x, rotation.y + shapeCenter.y)
-    }
-}
-
-const cube = new Cube(150, 150, 20,
-                      20, 20, 20)
-cube.scale(50)
+const cube = new Cube(200, 200, 20,
+                      100, 100, 50)
+cube.scale(10)
 let angle = 0
 
 const scene = () => {
-    angle += 0.01
+    // angle += 0.01
     requestAnimationFrame(scene)
     ctx.clearRect(0, 0, screen.w, screen.h)
+    cube.rotation.x = angle
     cube.rotation.y = angle
-    drawShape(cube)
+    cube.rotation.z = angle
+    drawShape(ctx, cube, false)
 }
 
 scene()

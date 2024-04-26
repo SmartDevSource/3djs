@@ -24,6 +24,32 @@ export class Cube{
             y: 0,
             z: 0
         }
+        this.edges2d = {
+            v1: {x: px, y: py},
+            v2: {x: px + width, y: py},
+            v3: {x: px + width, y: py + height},
+            v4: {x: px, y: py + height},
+            v4z: {x: px, y: py + depth},
+            v3z: {x: px + width, y: py},
+            v2z: {x: px + width, y: py + height},
+            v1z: {x: px, y: py + height}
+        }
+        this.edges2dPlaneConnections = {
+            v1z: 'v2z',
+            v2z: 'v3z',
+            v3z: 'v4z',
+            v4z: 'v1z',
+            v1: 'v1z',
+            v2: 'v2z',
+            v3: 'v3z',
+            v4: 'v4z',
+        }
+        this.edges2dDepthConnections = {
+            v1: 'v2',
+            v2: 'v3',
+            v3: 'v4',
+            v4: 'v1'
+        }
     }
     scale(size){
         this.vectors = {
