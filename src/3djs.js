@@ -1,6 +1,7 @@
 import { drawShape, Shape } from "./shapes.js"
+// import { losange } from '../3d_objects/losange.json'
 
-///////////////// DECLARATIONS /////////////////
+//////////////// DECLARATIONS ////////////////
 const canvas = document.getElementById("canvas")
 const ctx = canvas.getContext("2d")
 const screen = {w: window.innerWidth, h: window.innerHeight}
@@ -9,7 +10,14 @@ const windowScale = window.devicePixelRatio
 canvas.width = canvas.offsetWidth * windowScale
 canvas.height = canvas.offsetHeight * windowScale
 
-///////////////// EVENTS LISTENERS /////////////////
+//////////////// FUNCTIONS ////////////////
+const loadObject = async objectName => {
+    return await fetch(`../3d_objects/${objectName}`)
+    .then(res=>res.json())
+    .then(data=> data)
+}
+
+//////////////// EVENTS LISTENERS ////////////////
 window.addEventListener("resize", ()=>{
     screen.w = window.innerWidth
     screen.h = window.innerHeight
@@ -28,7 +36,10 @@ const shape = new Shape([
                         [220, 250, -10],
                     ])
 shape.scale(0)
-        
+
+const losange = await loadObject('losange.json')
+console.log("losange", losange)
+
 let angle = 0
 
 const scene = () => {
