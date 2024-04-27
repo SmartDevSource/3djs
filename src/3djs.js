@@ -1,5 +1,4 @@
-import { drawShape, Shape } from "./shapes.js"
-// import { losange } from '../3d_objects/losange.json'
+import { Object3D } from "./object3d.js"
 
 //////////////// DECLARATIONS ////////////////
 const canvas = document.getElementById("canvas")
@@ -12,9 +11,13 @@ canvas.height = canvas.offsetHeight * windowScale
 
 //////////////// FUNCTIONS ////////////////
 const loadObject = async objectName => {
-    return await fetch(`../3d_objects/${objectName}`)
-    .then(res=>res.json())
-    .then(data=> data)
+    try{
+        return await fetch(`../3d_objects/${objectName}`)
+        .then(res=>res.json())
+        .then(data=> data)
+    } catch (err) {
+        console.error("Le fichier json n'a pas été trouvé ")
+    }
 }
 
 //////////////// EVENTS LISTENERS ////////////////
@@ -24,32 +27,24 @@ window.addEventListener("resize", ()=>{
 })
 
 //////////////// SHAPES ////////////////
-const shape = new Shape([
-                        [200, 200, 10],
-                        [250, 200, 10],
-                        [280, 250, 10],
-                        [220, 250, 10],
-
-                        [200, 200, -10],
-                        [250, 200, -10],
-                        [280, 250, -10],
-                        [220, 250, -10],
-                    ])
-shape.scale(0)
-
-const losange = await loadObject('losange.json')
-console.log("losange", losange)
+const losangeData = await loadObject('losange.json')
+const losange = new Object3D(ctx, losangeData)
 
 let angle = 0
+const camera = {
+    x: 0, 
+    y: 0, 
+    z: 0
+}
 
 const scene = () => {
     angle += 0.01
     requestAnimationFrame(scene)
     ctx.clearRect(0, 0, screen.w, screen.h)
-    // shape.rotation.x = angle
-    // shape.rotation.y = angle
-    // shape.rotation.z = angle
-    drawShape(ctx, shape, true)
+    // losange.rotation.x = angle
+    // losange.rotation.y = angle
+    // losange.rotation.z = angle
+    losange.display(camera, false)
 }
 
 scene()
